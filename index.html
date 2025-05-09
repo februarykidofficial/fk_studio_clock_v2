@@ -26,28 +26,83 @@
             width: 90vh;
             height: 90vh;
             border-radius: 50%;
-            border: 4px solid;
-            border-color: #0bf;
+            border: 7px solid;
             box-shadow: 0 0 20px rgba(0, 187, 255, 0.8);
             display: flex;
             justify-content: center;
             align-items: center;
-            animation: pulse 2s infinite alternate;
+            animation: glow-fade 80s infinite alternate;
         }
 
-        @keyframes pulse {
-            from {
-                border-color: #0bf;
-                box-shadow: 0 0 20px rgba(0, 187, 255, 0.8);
+        @keyframes glow-fade {
+            0% {
+                border-color: #ff0000;
+                box-shadow: 0 0 30px #ff0000;
             }
-            to {
-                border-color: #0ff;
-                box-shadow: 0 0 30px rgba(0, 255, 255, 0.9);
+            6.66% {
+                border-color: #ff4500;
+                box-shadow: 0 0 35px #ff4500;
+            }
+            13.33% {
+                border-color: #ff8c00;
+                box-shadow: 0 0 40px #ff8c00;
+            }
+            20% {
+                border-color: #ffa500;
+                box-shadow: 0 0 45px #ffa500;
+            }
+            26.66% {
+                border-color: #ffc300;
+                box-shadow: 0 0 50px #ffc300;
+            }
+            33.33% {
+                border-color: #ffff00;
+                box-shadow: 0 0 55px #ffff00;
+            }
+            40% {
+                border-color: #bfff00;
+                box-shadow: 0 0 50px #bfff00;
+            }
+            46.66% {
+                border-color: #7fff00;
+                box-shadow: 0 0 45px #7fff00;
+            }
+            53.33% {
+                border-color: #32cd32;
+                box-shadow: 0 0 40px #32cd32;
+            }
+            60% {
+                border-color: #00ff00;
+                box-shadow: 0 0 35px #00ff00;
+            }
+            66.66% {
+                border-color: #00fa9a;
+                box-shadow: 0 0 30px #00fa9a;
+            }
+            73.33% {
+                border-color: #00ffff;
+                box-shadow: 0 0 35px #00ffff;
+            }
+            80% {
+                border-color: #00bfff;
+                box-shadow: 0 0 40px #00bfff;
+            }
+            86.66% {
+                border-color: #008b8b;
+                box-shadow: 0 0 45px #008b8b;
+            }
+            93.33% {
+                border-color: #0000ff;
+                box-shadow: 0 0 50px #0000ff;
+            }
+            100% {
+                border-color: #ff0000;
+                box-shadow: 0 0 55px #ff0000;
             }
         }
 
         #clock-text {
-            font-size: 8vw;
+            font-size: 7vw;
             color: #fff;
             text-shadow: 0 0 10px #fff;
             letter-spacing: 0.1em;
@@ -69,7 +124,7 @@
         }
 
         #date-text {
-            font-size: 3vw;
+            font-size: 2.5vw;
             color: #eee;
             text-shadow: 0 0 5px #eee;
             margin-top: 10px;
@@ -82,19 +137,6 @@
             white-space: nowrap;
         }
 
-        #location-text {
-            font-size: 2vw;
-            color: #ddd;
-            text-shadow: 0 0 5px #ddd;
-            margin-top: 20px;
-            text-align: center;
-            position: absolute;
-            top: 15%;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 2;
-            white-space: nowrap;
-        }
 
         .text-center {
             text-align: center;
@@ -110,7 +152,6 @@
                 <span id="seconds">00</span>
             </div>
             <div id="date-text" class="text-center">January 1, 2024</div>
-             <div id="location-text" class="text-center">Loading Location...</div>
         </div>
     </div>
 
@@ -144,57 +185,11 @@
             document.getElementById('date-text').textContent = dateString;
         }
 
-        function getLocation() {
-            if (navigator.geolocation) {
-                locationTimeout = setTimeout(() => {
-                    if (!locationDenied) {
-                         document.getElementById("location-text").textContent = "Location request timed out.";
-                    }
-                   
-                }, 10000);
 
-                navigator.geolocation.getCurrentPosition(showPosition, showError, {
-                    enableHighAccuracy: true,
-                    timeout: 10000,
-                    maximumAge: 0
-                });
-            } else {
-                document.getElementById("location-text").innerHTML = "Geolocation is not supported by this browser.";
-            }
-        }
-
-        function showPosition(position) {
-            clearTimeout(locationTimeout);
-            const latitude = position.coords.latitude;
-            const longitude = position.coords.longitude;
-            const locationString = `Latitude: ${latitude.toFixed(4)}, Longitude: ${longitude.toFixed(4)}`;
-            document.getElementById("location-text").textContent = locationString;
-        }
-
-        function showError(error) {
-            clearTimeout(locationTimeout);
-            let errorMessage = "Location error: ";
-            switch (error.code) {
-                case error.PERMISSION_DENIED:
-                    locationDenied = true;
-                    errorMessage = "";
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    errorMessage += "Location information is unavailable.";
-                    break;
-                case error.TIMEOUT:
-                    errorMessage += "The request to get user location timed out.";
-                    break;
-                case error.UNKNOWN_ERROR:
-                    errorMessage += "An unknown error occurred.";
-                    break;
-            }
-            document.getElementById("location-text").textContent = errorMessage;
-        }
 
         updateClock();
         setInterval(updateClock, 1000);
-        getLocation();
+
 
     </script>
 </body>
