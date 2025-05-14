@@ -31,7 +31,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            animation: glow-fade 100s infinite alternate;
+            animation: glow-fade 80s infinite alternate;
         }
 
         @keyframes glow-fade {
@@ -137,9 +137,31 @@
             white-space: nowrap;
         }
 
-
         .text-center {
             text-align: center;
+        }
+
+        /* Media query for mobile devices */
+        @media (max-width: 768px) {
+            #clock-circle {
+                width: 95vw;
+                height: 95vw;
+                border-width: 5px;
+            }
+
+            #clock-text {
+                font-size: 12vw;
+            }
+
+            #clock-text span {
+                padding: 0 1vw;
+                min-width: 6vw;
+            }
+
+            #date-text {
+                font-size: 3vw;
+                bottom: 10%;
+            }
         }
     </style>
 </head>
